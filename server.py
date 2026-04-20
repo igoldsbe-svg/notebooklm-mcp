@@ -1,16 +1,10 @@
 import sys
 import os
-import json
 import subprocess
-from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 
-# On Railway, load auth cookies from env var into the expected file path
-STORAGE_PATH = Path.home() / ".notebooklm" / "storage_state.json"
-storage_env = os.environ.get("NOTEBOOKLM_STORAGE_STATE")
-if storage_env and not STORAGE_PATH.exists():
-    STORAGE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    STORAGE_PATH.write_text(storage_env)
+# notebooklm-py natively reads NOTEBOOKLM_AUTH_JSON from the environment.
+# Set this env var in Railway with the contents of ~/.notebooklm/storage_state.json
 
 NOTEBOOKLM = os.environ.get("NOTEBOOKLM_BIN", "notebooklm")
 PORT = int(os.environ.get("PORT", 8484))
